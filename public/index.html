@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover">
 <title>ahmadkhan — Messenger</title>
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#0b6b4f">
@@ -47,6 +47,7 @@ html[data-theme=light] #login{background:#f0f2f5f5!important}html[data-theme=lig
 html[data-theme=light] .messages{background-image:none;background-color:#efeae2}html[data-theme=light][data-wall=plain] .messages{background-color:#fff}html[data-theme=light][data-wall=green] .messages{background-color:#dcefd8}html[data-theme=light][data-wall=blue] .messages{background-color:#dbe8f5}
 
 /* ===== v18 design layer ===== */
+html,body{max-width:100%;overflow-x:hidden}#login{grid-template-columns:minmax(0,1fr)}#login>div{width:min(390px,100%)!important;box-sizing:border-box}
 :root{--brand:#14b87a;--hdr:#0b6b4f;--bg:#0a1410;--bg2:#0e1a15;--surface:#13221c;--surface2:#1b2f27;--bin:#1b2f27;--bout:#0b6b4f;--text:#e8f3ee;--muted:#8aa89b;--border:#1f3329;--msgbg:#0a1410;--pat:radial-gradient(#ffffff0a 1px,transparent 1px)}
 html[data-theme=light]{--bg:#f3f1ec;--bg2:#fff;--surface:#fff;--surface2:#eef2ee;--bin:#fff;--bout:#d6f5df;--text:#10201a;--muted:#667a71;--border:#e3e9e5;--msgbg:#efeae2;--pat:radial-gradient(#0000000a 1px,transparent 1px)}
 html[data-wall=plain]{--pat:none}html[data-wall=green]{--msgbg:#0c2a22;--pat:none}html[data-wall=blue]{--msgbg:#0c2540;--pat:none}
@@ -148,7 +149,7 @@ async function startChat(id){try{const r=await api('/chats',{method:'POST',body:
 
 function grow(t){updSend();t.style.height='auto';t.style.height=Math.min(t.scrollHeight,130)+'px'}
 let pollBusy=false;async function poll(){if(!me||pollBusy)return;pollBusy=true;try{const rows=await api('/chats'),old=new Map(chats.map(x=>[x.id,x]));const sig=x=>[x.id,x.updated_at,x.last_message,x.unread,x.peer_read].join('|');const changed=rows.map(sig).join()!==chats.map(sig).join(),tch=rows.map(x=>x.typing_name||'').join()!==chats.map(x=>x.typing_name||'').join();chats=rows.map(x=>({...x,u:x.id,msgs:old.get(x.id)?.msgs||[]}));notifyNew(rows,old);updateBadge(rows);setPresence();if(tch&&!changed&&!document.hidden)renderList();if(changed&&!document.hidden){renderList();if(currentChat&&($('phone').classList.contains('chat-open')||innerWidth>760))await openChat(currentChat,false)}}catch{}pollBusy=false}
-setInterval(poll,3000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){renderList();if(currentChat&&($('phone').classList.contains('chat-open')||innerWidth>760))openChat(currentChat,false)}poll()});
+let pt=0;setInterval(()=>{if(document.hidden&&(pt++%5))return;poll()},4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){renderList();if(currentChat&&($('phone').classList.contains('chat-open')||innerWidth>760))openChat(currentChat,false)}poll()});
 
 const EMO='😀😃😄😁😆😅😂🤣😊😇🙂😉😍🥰😘😋😎🤩🥳😏😒😞😔😟😕🙁😢😭😤😠😡🤯😳🥵🥶😱😨😰🤔🤗🤭🤫😶😐😑😬🙄😴🤤😷🤒🤕🤢🤮🥴😵🤠👍👎👏🙌🙏💪👋🤝🤞👌💖💗💓💕💛💚💙💜🖤🤍💔🔥✨🎉🎂🌹🌙⭐';
 function addEmo(e){const t=$('input'),s=t.selectionStart??t.value.length,x=t.selectionEnd??s;t.value=t.value.slice(0,s)+e+t.value.slice(x);t.selectionStart=t.selectionEnd=s+e.length;grow(t)}
