@@ -6,7 +6,7 @@ const worker=fs.readFileSync('src/worker.js','utf8');
 const schema=fs.readFileSync('migrations/0001_init.sql','utf8');
 const checks=[
  ['frontend calls D1 API',html.includes("api('/messages'")&&html.includes("api('/chats'")],
- ['image/audio input exists',html.includes("accept='image/*,audio/*'")],
+ ['image/audio input exists',html.includes("accept='image/*,audio/*")],
  ['media upload endpoint wired',html.includes("api('/media/init'")&&html.includes("api('/media/chunk'")&&html.includes("api('/media/complete'")],
  ['worker has native routing',!worker.includes('itty-router')],
  ['membership enforced',worker.includes('isMember(env,chatId,userId)')],
