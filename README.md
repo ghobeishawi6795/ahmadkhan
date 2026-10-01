@@ -18,7 +18,7 @@ npx wrangler deploy
 ```
 
 ## Demo
-Migration 0001 seeds `admin` and `demo`. Migration 0002 sets the initial admin password to `ChangeMe123!`. Change it immediately with the admin password endpoint.
+Migration 0001 seeds the administrator and demo user. Migration 0006 changes the initial administrator credentials to username `mohammad` and password `mohammad`.
 
 ## Migration note
 Migrations are ordered one-time schema migrations. Do not manually rerun an already-applied migration against the same D1 database; Wrangler records migration state. Apply them in order.
