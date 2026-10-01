@@ -16,7 +16,7 @@ const ALLOWED=new Set(["image/jpeg","image/png","image/webp","image/gif","audio/
 async function recordLoginFailure(env,keyId){const now=new Date();const r=await env.DB.prepare("SELECT attempts FROM login_attempts WHERE key=?").bind(keyId).first();const attempts=Number(r?.attempts||0)+1;const locked=attempts>=5?new Date(now.getTime()+15*60*1000).toISOString().slice(0,19).replace('T',' '):null;await env.DB.prepare("INSERT INTO login_attempts(key,attempts,locked_until) VALUES(?,?,?) ON CONFLICT(key) DO UPDATE SET attempts=excluded.attempts,locked_until=excluded.locked_until").bind(keyId,attempts,locked).run()}
 async function route(req,env){
  const u=new URL(req.url),p=u.pathname,method=req.method;
- if(p==="/api/health"&&method==="GET"){const r=await env.DB.prepare("SELECT 1 ok").first();return json({ok:r?.ok===1,storage:"D1-only",r2:false})}
+ if(p==="/api/health"&&method==="GET"){const r=await env.DB.prepare("SELECT 1 ok").first();return json({ok:r?.ok===1,storage:"D1-only",r2:false,auth_secret:!!env.AUTH_SECRET})}
  if(p==="/api/login"&&method==="POST"){
    const b=await body(req);if(!b?.username||!b?.password)return json({error:"credentials_required"},400);
    const ip=(req.headers.get('CF-Connecting-IP')||'unknown').slice(0,64), uname=String(b.username).trim().slice(0,100), keyId=`${ip}:${uname}`;
