@@ -1,0 +1,7 @@
+{
+  "name":"ahmadkhan-worker",
+  "private":true,
+  "type":"module",
+  "scripts":{"test":"node tests/e2e.mjs"},
+  "devDependencies":{"wrangler":"^4.0.0"}
+}

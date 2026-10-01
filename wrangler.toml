@@ -1,0 +1,15 @@
+name = "ahmadkhan-messenger"
+main = "src/worker.js"
+compatibility_date = "2026-09-01"
+
+[assets]
+directory = "./public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "chat2"
+database_id = "1dee3395-9716-418f-b433-449fb2300100"
+migrations_dir = "migrations"
+
+[triggers]
+crons = ["0 * * * *"]
