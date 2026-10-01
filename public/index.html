@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ahmadkhan — Messenger</title>
 <link rel="manifest" href="/manifest.webmanifest">
-<meta name="theme-color" content="#07111f">
+<meta name="theme-color" content="#0b6b4f">
 <link rel="icon" type="image/png" href="/icons/favicon-48.png"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><script>if("serviceWorker" in navigator&&location.protocol!=="file:")addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));var deferredInstall=null;addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e})</script>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#07111f;color:#edf4ff}
@@ -45,17 +45,58 @@ html[data-theme=light] .day{background:#fff}html[data-theme=light] .bubble{backg
 html[data-theme=light] .panel{background:#f0f2f5f2}html[data-theme=light] .panelbox,html[data-theme=light] .card{background:#fff;border-color:#e0e5ea;color:#111b21}
 html[data-theme=light] #login{background:#f0f2f5f5!important}html[data-theme=light] #login>div{background:#fff!important;border-color:#e0e5ea!important}html[data-theme=light] #toast{background:#111b21}
 html[data-theme=light] .messages{background-image:none;background-color:#efeae2}html[data-theme=light][data-wall=plain] .messages{background-color:#fff}html[data-theme=light][data-wall=green] .messages{background-color:#dcefd8}html[data-theme=light][data-wall=blue] .messages{background-color:#dbe8f5}
+
+/* ===== v18 design layer ===== */
+:root{--brand:#14b87a;--hdr:#0b6b4f;--bg:#0a1410;--bg2:#0e1a15;--surface:#13221c;--surface2:#1b2f27;--bin:#1b2f27;--bout:#0b6b4f;--text:#e8f3ee;--muted:#8aa89b;--border:#1f3329;--msgbg:#0a1410;--pat:radial-gradient(#ffffff0a 1px,transparent 1px)}
+html[data-theme=light]{--bg:#f3f1ec;--bg2:#fff;--surface:#fff;--surface2:#eef2ee;--bin:#fff;--bout:#d6f5df;--text:#10201a;--muted:#667a71;--border:#e3e9e5;--msgbg:#efeae2;--pat:radial-gradient(#0000000a 1px,transparent 1px)}
+html[data-wall=plain]{--pat:none}html[data-wall=green]{--msgbg:#0c2a22;--pat:none}html[data-wall=blue]{--msgbg:#0c2540;--pat:none}
+html[data-theme=light][data-wall=plain]{--msgbg:#fff}html[data-theme=light][data-wall=green]{--msgbg:#d6ecd8}html[data-theme=light][data-wall=blue]{--msgbg:#dbe8f5}
+html[data-theme] body{background:var(--bg);color:var(--text)}
+html[data-theme] .phone{background:var(--bg);border-color:var(--border);border-radius:24px}
+html[data-theme] .sidebar{background:var(--bg2);border-color:var(--border);position:relative}
+html[data-theme] .brand{background:var(--hdr);color:#fff;padding:14px 16px}.lgrow{display:flex;align-items:center;gap:11px}.lg{width:42px;height:42px;border-radius:13px;box-shadow:0 2px 8px #0005}
+html[data-theme] .logo{font-size:21px;color:#fff;letter-spacing:.3px}html[data-theme] .sub{color:#ffffffb8}
+html[data-theme] .header .icon,html[data-theme] .brand .icon{background:#ffffff24;color:#fff}
+html[data-theme] .icon{background:var(--surface2);color:var(--text)}
+html[data-theme] .search{padding:10px 14px 4px}html[data-theme] .search input{background:var(--surface2);border:0;color:var(--text);border-radius:22px;padding:12px 18px}
+html[data-theme] .tabs{padding:8px 14px;overflow:auto;gap:8px}html[data-theme] .tabs button{flex:none;background:var(--surface2);color:var(--muted);border-radius:20px;padding:8px 16px;font-size:13px}html[data-theme] .tabs .on{background:var(--brand);color:#fff;font-weight:800}
+html[data-theme] .story{color:var(--muted)}html[data-theme] .story .avatar{border:2.5px solid var(--brand);padding:2px;background-clip:content-box}
+html[data-theme] .chat{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--text)}html[data-theme] .chat:hover,html[data-theme] .chat.active{background:var(--surface2)}
+html[data-theme] .chat .avatar{width:54px;height:54px;min-width:54px}html[data-theme] .name{font-weight:700;color:var(--text)}html[data-theme] .time,html[data-theme] .preview{color:var(--muted)}html[data-theme] .preview{font-size:13px}
+html[data-theme] .badge{background:var(--brand);color:#fff;min-width:20px;text-align:center;padding:2px 6px}
+.fab{position:absolute;left:18px;bottom:22px;width:58px;height:58px;border-radius:18px;background:var(--brand);color:#fff;font-size:24px;box-shadow:0 8px 22px #0006;z-index:3}
+@media(max-width:760px){.fab{bottom:86px}}
+html[data-theme] .mobile-nav{background:var(--surface);border-top:1px solid var(--border)}html[data-theme] .mobile-nav button{background:none;color:var(--muted);font-size:11px;padding:9px 0}html[data-theme] .mobile-nav .on{color:var(--brand);font-weight:800}
+html[data-theme] .main{background:var(--msgbg)}
+html[data-theme] .header{background:var(--hdr);border:0;color:#fff;backdrop-filter:none}html[data-theme] .header .name{color:#fff}html[data-theme] .online{color:#d5f5e6}
+html[data-theme] .messages{background-color:var(--msgbg);background-image:var(--pat);background-size:22px 22px}
+html[data-theme] .day{background:var(--surface);color:var(--muted);box-shadow:0 1px 2px #0002}
+html[data-theme] .bubble{background:var(--bin);color:var(--text);border:0;box-shadow:0 1px 1.5px #0003}html[data-theme] .me .bubble{background:var(--bout)}
+html[data-theme][data-theme=dark] .me .bubble{color:#fff}html[data-theme] .meta{color:var(--muted)}html[data-theme] .reply{background:#00000022;border-right-color:var(--brand);color:var(--muted)}
+html[data-theme] .composer{background:transparent;border:0;padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:6px}
+html[data-theme] .composer .icon{background:none;color:var(--muted);font-size:22px;width:38px}
+html[data-theme] .composer textarea{background:var(--surface);color:var(--text);border:0;border-radius:24px;padding:12px 16px;box-shadow:0 1px 2px #0002}
+html[data-theme] .send{background:var(--brand);color:#fff;border-radius:50%;width:48px;height:48px;font-size:18px}
+html[data-theme] .rbar,html[data-theme] #emojiBox{background:var(--surface);border-color:var(--border)}
+html[data-theme] .panel{background:var(--bg)}html[data-theme] .panelbox,html[data-theme] .card{background:var(--surface);color:var(--text);border-color:var(--border)}
+html[data-theme] .close{background:var(--surface2);color:var(--text)}
+html[data-theme] .field input,html[data-theme] .field select{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:14px}
+html[data-theme] .primary{background:var(--brand);color:#fff;border-radius:14px;font-weight:800}h3{color:var(--brand)}
+html[data-theme] .seg button{background:var(--surface2);color:var(--text)}html[data-theme] .seg .on{background:var(--brand);color:#fff}
+html[data-theme] #sheet .sb{background:var(--surface)}html[data-theme] #sheet button{background:var(--surface2);color:var(--text)}
+html[data-theme] #login{background:linear-gradient(160deg,var(--hdr),#06231a)!important}html[data-theme] #login>div{background:var(--surface)!important;border:0!important;box-shadow:0 20px 60px #0006;color:var(--text)}
+html[data-theme] #toast{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
 </style>
 </head>
 <body>
-<div id="login" style="position:fixed;inset:0;background:#07111ff5;z-index:50;display:grid;place-items:center;padding:20px"><div style="width:min(390px,100%);background:#102139;border:1px solid #294463;border-radius:24px;padding:24px"><h2>ورود به ahmadkhan</h2><p style="color:#8da6c1;font-size:12px">ورود با نام کاربری و رمز عبور</p><div class="field"><label>نام کاربری</label><input id="loginUser" autocomplete="username" autocapitalize="none"></div><div class="field"><label>رمز عبور</label><input id="loginPass" type="password" placeholder="رمز عبور" autocomplete="current-password"></div><button class="primary" style="width:100%" onclick="login()">ورود</button><button id="loginCancel" class="icon" style="display:none;width:100%;margin-top:10px;padding:12px" onclick="$('login').style.display='none'">انصراف</button><div id="loginErr" style="color:#ff9aaa;font-size:11px;margin-top:10px"></div></div></div><div class="app"><div class="phone" id="phone">
+<div id="login" style="position:fixed;inset:0;background:#07111ff5;z-index:50;display:grid;place-items:center;padding:20px"><div style="width:min(390px,100%);background:#102139;border:1px solid #294463;border-radius:24px;padding:24px"><div style="text-align:center"><img src="/icons/icon-192.png" alt="" style="width:88px;height:88px;border-radius:26px;box-shadow:0 10px 28px #0005"><h2 style="margin:14px 0 2px">ahmadkhan</h2><p style="color:var(--muted);font-size:12px;margin:0 0 6px">ورود با نام کاربری و رمز عبور</p></div><div class="field"><label>نام کاربری</label><input id="loginUser" autocomplete="username" autocapitalize="none"></div><div class="field"><label>رمز عبور</label><input id="loginPass" type="password" placeholder="رمز عبور" autocomplete="current-password"></div><button class="primary" style="width:100%" onclick="login()">ورود</button><button id="loginCancel" class="icon" style="display:none;width:100%;margin-top:10px;padding:12px" onclick="$('login').style.display='none'">انصراف</button><div id="loginErr" style="color:#ff9aaa;font-size:11px;margin-top:10px"></div></div></div><div class="app"><div class="phone" id="phone">
 <aside class="sidebar">
- <div class="brand"><div><div class="logo">ahmadkhan <b>●</b></div><div class="sub">Private community messenger</div></div><div style="display:flex;gap:6px"><button class="icon" onclick="openPanel('contacts')">✎</button><button class="icon" onclick="openPanel('settings')">⚙</button></div></div>
+ <div class="brand"><div class="lgrow"><img src="/icons/favicon-48.png" class="lg" alt=""><div><div class="logo">ahmadkhan</div><div class="sub">پیام‌رسان خصوصی</div></div></div><div style="display:flex;gap:6px"><button class="icon" onclick="openPanel('settings')">⚙</button></div></div>
  <div class="search"><input id="search" placeholder="جستجوی گفتگو..." oninput="render()"></div>
  <div class="tabs"><button class="on" onclick="filter='all';render()">همه</button><button onclick="filter='unread';render()">خوانده‌نشده</button><button onclick="filter='groups';render()">گروه‌ها</button><button onclick="filter='arch';render()">بایگانی</button></div>
  <div class="stories" id="stories"></div><div class="list" id="list"></div>
  <div class="mobile-nav"><button class="on">💬<br>گفتگوها</button><button onclick="openPanel('status')">◉<br>وضعیت</button><button onclick="openPanel('settings')">⚙<br>تنظیمات</button></div>
-</aside>
+<button class="fab" onclick="openPanel('contacts')">✎</button></aside>
 <main class="main">
  <div class="header"><button class="icon back" onclick="back()">‹</button><div class="avatar" id="headAv">A</div><div class="head"><div class="name" id="headName">...</div><div class="online" id="headStatus">آنلاین</div></div><div class="headactions"><button class="icon optional" onclick="toast('تماس صوتی در نسخه بعدی متصل می‌شود')">☎</button><button class="icon" onclick="openPanel('chat')">⋮</button></div></div>
  <div class="messages" id="messages"></div>
@@ -69,7 +110,7 @@ const API='/api'; let users=[],chats=[],currentChat=null,filter='all',me=null;
 const $=id=>document.getElementById(id); const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 const DEF={theme:'dark',fs:15,wall:'dots',enter:!matchMedia('(pointer:coarse)').matches,sound:true};let S={...DEF};try{S={...DEF,...JSON.parse(localStorage.getItem('ak_settings')||'{}')}}catch{}
-function applySettings(){const d=document.documentElement;let t=S.theme;if(t==='auto')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';d.dataset.theme=t;d.dataset.wall=S.wall;d.style.setProperty('--fs',S.fs+'px');const m=document.querySelector('meta[name=theme-color]');if(m)m.content=t==='light'?'#f0f2f5':'#07111f'}
+function applySettings(){const d=document.documentElement;let t=S.theme;if(t==='auto')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';d.dataset.theme=t;d.dataset.wall=S.wall;d.style.setProperty('--fs',S.fs+'px');const m=document.querySelector('meta[name=theme-color]');if(m)m.content='#0b6b4f'}
 function setPref(k,v){S[k]=v;try{localStorage.setItem('ak_settings',JSON.stringify(S))}catch{}applySettings();settingsPanel()}
 function toast(m){let t=$('toast');if(!t){t=document.createElement('div');t.id='toast';document.body.appendChild(t)}t.textContent=m;t.className='show';clearTimeout(t._t);t._t=setTimeout(()=>t.className='',2600)}
 function render(){document.querySelectorAll('.tabs button').forEach((b,i)=>b.classList.toggle('on',['all','unread','groups','arch'][i]===filter));renderList()}
