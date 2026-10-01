@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>ثبت کاربر (موقت)</title>
+<style>
+body{margin:0;background:#07111f;color:#e8f0fa;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;padding:20px}
+.box{width:min(420px,100%);background:#102139;border:1px solid #294463;border-radius:20px;padding:22px}
+label{display:block;font-size:12px;color:#8da6c1;margin:12px 0 4px}
+input,select{width:100%;box-sizing:border-box;background:#0a1524;border:1px solid #294463;border-radius:12px;color:#fff;padding:12px;font-size:15px}
+button{width:100%;margin-top:18px;padding:13px;border:0;border-radius:12px;background:#39d98a;color:#04210f;font-weight:800;font-size:15px}
+#out{margin-top:14px;font-size:13px;word-break:break-word}
+.warn{font-size:11px;color:#ffcf8a;margin-top:6px}
+</style></head><body><div class="box">
+<h2>ثبت / ریست کاربر (صفحه موقت)</h2>
+<div class="warn">بعد از استفاده این فایل را از پروژه حذف کنید.</div>
+<label>کلید راه‌اندازی (همان AUTH_SECRET)</label><input id="key" type="password" autocomplete="off">
+<label>نام کاربری</label><input id="u" autocapitalize="none" autocomplete="off">
+<label>رمز عبور (حداقل ۸ کاراکتر)</label><input id="p" type="text" autocomplete="off">
+<label>نقش</label><select id="r"><option value="user">کاربر</option><option value="admin">ادمین</option></select>
+<label>روز اشتراک</label><input id="d" type="number" value="30" min="1" max="3650">
+<button onclick="go()">ثبت</button>
+<div id="out"></div></div>
+<script>
+async function go(){const o=document.getElementById('out');o.textContent='...';
+try{const r=await fetch('/api/setup/user',{method:'POST',headers:{'content-type':'application/json','x-setup-key':document.getElementById('key').value},
+body:JSON.stringify({username:document.getElementById('u').value,password:document.getElementById('p').value,role:document.getElementById('r').value,days:Number(document.getElementById('d').value)})});
+const j=await r.json();o.textContent=r.ok?(j.created?'کاربر ساخته شد: ':'رمز/نقش کاربر موجود به‌روز شد: ')+j.username+' ('+j.role+')':'خطا: '+(j.error||r.status)+(j.message?' — '+j.message:'')}
+catch(e){o.textContent='خطا: '+e.message}}
+</script></body></html>
