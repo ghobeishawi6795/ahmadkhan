@@ -1,4 +1,4 @@
-const CACHE='ahmadkhan-static-v8';
+const CACHE='ahmadkhan-static-v12';
 const CORE=['/','/manifest.webmanifest','/icons/icon-192.png','/icons/icon-512.png','/icons/icon-maskable-512.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
@@ -10,3 +10,10 @@ self.addEventListener('fetch',event=>{
 });
 
 self.addEventListener('notificationclick',e=>{e.notification.close();e.waitUntil(clients.matchAll({type:'window'}).then(l=>l[0]?l[0].focus():clients.openWindow('/')))});
+
+self.addEventListener('push',e=>e.waitUntil((async()=>{
+ const cs=await clients.matchAll({type:'window',includeUncontrolled:true});if(cs.some(c=>c.visibilityState==='visible'))return;
+ let items=[];try{const r=await fetch('/api/push/pending',{credentials:'include'});if(r.ok)items=await r.json()}catch{}
+ if(!items.length)items=[{id:'x',name:'ahmadkhan',last:'پیام جدید'}];
+ for(const it of items)await self.registration.showNotification(it.name,{body:it.last,icon:'/icons/icon-192.png',badge:'/icons/icon-192.png',tag:'chat'+it.id,renotify:true,dir:'rtl',lang:'fa'})
+})()));
