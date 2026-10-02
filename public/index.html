@@ -223,6 +223,6 @@ async function compressImage(file,maxBytes=5*1024*1024){if(file.size<=maxBytes)r
 async function uploadD1Media(file){const init=await api('/media/init',{method:'POST',body:JSON.stringify({name:file.name,type:file.type,size:file.size})});const size=init.chunk_size;for(let p=0,part=0;p<file.size;p+=size,part++){const buf=await file.slice(p,Math.min(p+size,file.size)).arrayBuffer();let bin='';const a=new Uint8Array(buf);for(let i=0;i<a.length;i+=0x8000)bin+=String.fromCharCode(...a.subarray(i,i+0x8000));await api('/media/chunk',{method:'POST',body:JSON.stringify({media_id:init.media_id,part,data_b64:btoa(bin)})})}await api('/media/complete',{method:'POST',body:JSON.stringify({media_id:init.media_id})});return init}
 $('search').addEventListener('input',renderList); 
 if('serviceWorker' in navigator && location.protocol!=='file:') navigator.serviceWorker.register('/sw.js').catch(()=>{});
-if(location.protocol==='file:'){$('loginErr').textContent='این فایل برای ظاهر است؛ برای اتصال واقعی باید روی Cloudflare Worker اجرا شود'} else loadChats().catch(e=>{$('list').innerHTML='<div style="padding:25px;color:#ff9aaa">اتصال D1 برقرار نیست: '+esc(e.message)+'</div>'});
+if(location.protocol==='file:'){$('loginErr').textContent='این فایل برای ظاهر است؛ برای اتصال واقعی باید روی Cloudflare Worker اجرا شود'} else loadChats().then(()=>{$('login').style.display='none'}).catch(e=>{$('list').innerHTML='<div style="padding:25px;color:#ff9aaa">اتصال D1 برقرار نیست: '+esc(e.message)+'</div>'});
 </script>
 </body></html>
